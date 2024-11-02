@@ -1,0 +1,27 @@
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives import serialization
+
+private_key = rsa.generate_private_key(
+    public_exponent=65537,
+    key_size=2058
+)
+
+
+
+private_key_pass = b"oaZhL8khPDRP1ZmbdHlIio1g0Q81XhTJR7N0tl8xYiFpmKGf3AOqYYBJ6gELjmQg5Tg40Ss09zwR9MojjHFPjEsLnseIlSB4NHhRxTSQ77XYwMdGMwLOCbfab13VUXdF6tpUMuLx0WfxXp76HNsYz2AfQJQxQbuYaXjamph8co3grtqseWd94En1jjCyZhk4OyBHHgtXQF7qnZ6uMThnle6eub8VUwa2Xs9uew7jxVTq4PF5MeMAkxRrwJLY8cE8Gea6Ww4y6vl3PH6qTLerl3frPRU4qiIal7WchVjLwVAfU5OTNOaj9QCaqZYKnYtwu8f1EPbMrwIJPzwig4kgebnMGudMUcjsk9EPeHDsb8kHQ0fc1AsUmXG0kktO1jLIqZ7IIe7qwAJppPfeAdCkEyZzQ"
+encrypted_pem_private_key = private_key.private_bytes(
+    encoding=serialization.Encoding.PEM,
+    format=serialization.PrivateFormat.PKCS8,
+    encryption_algorithm=serialization.BestAvailableEncryption(private_key_pass)
+)
+
+print(encrypted_pem_private_key.splitlines()[0])
+# b'-----BEGIN ENCRYPTED PRIVATE KEY-----'
+
+pem_public_key = private_key.public_key().public_bytes(
+  encoding=serialization.Encoding.PEM,
+  format=serialization.PublicFormat.SubjectPublicKeyInfo
+)
+
+print(pem_public_key.splitlines()[0])
+# b'-----BEGIN PUBLIC KEY-----'
