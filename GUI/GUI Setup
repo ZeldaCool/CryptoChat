@@ -16,6 +16,10 @@ ttk.Label(tab2, text = "Get Your SSH Key Here!")
 ttk.Label(tab3, text = "Start Your Encrypted Chat!")
 textboxthing =  Text(tab3, height = 5, width = 52)
 
+
+something = tk.Label(tab1,text ="Have you ever wanted to be able to talk to people uninterrupted? Without Fear of stolen data? Well... It is here! Welcome to CryptoChat, an SSH based messaging system! ")
+
+something.pack()
 textboxthing.pack()
 textboxthing.insert(tk.END, 'Insert Your SSH Key Here To Start A Chat! Make Sure You Know This Person.')
 root.mainloop()
