@@ -1,25 +1,24 @@
 #Will use socket connections instead of SSH
 from ssl import SSLContext
 
+
 import certifi
 import socket
 import ssl
+import serversocket
 
-packet, reply = "<packet>How are you?</packet>", "Packet Sent!"
-HOST, PORT = '127.0.0.5', 443
+hostname = socket.gethostname()
+PORT = 400
+host = socket.gethostbyname(hostname)
 
-
-sock = socket.socket(socket.SOCK_STREAM)
-sock.settimeout(10)
-
-# Fix position error
-wrappedSocket = SSLContext().wrap_socket(sock, server_side=False, do_handshake_on_connect=True, suppress_ragged_eofs=True, server_hostname=None, session=None)
-
-
-
-wrappedSocket.connect((HOST, PORT))
-wrappedSocket.send (packet)
-print(wrappedSocket.recv(1280))
-
-
-wrappedSocket.close()
+data = input('Message:')
+data = host + ": " + data
+def sender():
+    erver = (serversocket.HOST, 4000)
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.bind((host,PORT))
+    wrappedSocket = SSLContext().wrap_socket(s, server_side=False, do_handshake_on_connect=True, suppress_ragged_eofs=True, server_hostname=None, session=None)
+    wrappedSocket.sendto(data.encode('utf-8'), erver)
+    print(wrappedSocket.recv(1024))
+    wrappedSocket.close()
+sender()
