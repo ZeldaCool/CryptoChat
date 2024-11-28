@@ -1,7 +1,5 @@
 import tkinter as tk
 from tkinter import ttk, Text
-import storageServer
-from storageServer import *
 
 root = tk.Tk()
 root.title('CryptoChat')
