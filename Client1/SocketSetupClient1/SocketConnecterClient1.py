@@ -6,6 +6,7 @@ import certifi
 import socket
 import ssl
 import serversocket
+import time
 
 hostname = socket.gethostname()
 PORT = 400
@@ -17,7 +18,13 @@ def sender():
     erver = (serversocket.HOST, 4000)
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind((host,PORT))
+    s.settimeout(5)
     s.sendto(ata.encode('utf-8'),erver)
     print(s.recv(1024))
-    s.close()
+    try:
+        s.sendto(ata.encode('utf-8'), erver)
+    except socket.timeout:
+        print("Error, timeout")
+        s.close()
+    
 sender()
