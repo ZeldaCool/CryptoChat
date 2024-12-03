@@ -21,7 +21,7 @@ def socketeer(conn,addr):
             msg_length = int(msg_length)
             msg = conn.recv(msg_length).decode(FORMAT)
             print('New Message Recieved!')
-            print(str(ADDR)+': '+ msg)
+            print(str(addr)+': '+ msg)
             if socket.timeout:
                 print('Error! Connection Timeout. Closing Socket Now...')
                 conn.close()
@@ -52,6 +52,7 @@ def sender():
     print('Changing modes now!')
     main()
 def main():
+    global FirstUse
     while FirstUse == True:
         listen()
         FirstUse = False
