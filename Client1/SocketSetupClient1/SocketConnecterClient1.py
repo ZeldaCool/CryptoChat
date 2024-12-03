@@ -1,31 +1,15 @@
-#Will use socket connections instead of SSH
-from ssl import SSLContext
-
-
-import certifi
+#Import Statements
+#Credit: TechWithTim(Adjusted Heavily)
+import threading
 import socket
-import ssl
-import serversocket
-import time
-
-hostname = socket.gethostname()
-PORT = 400
-host = socket.gethostbyname(hostname)
-
-ata = input('Message:')
-ata = host + ": " + ata
-def sender():
-    while ata != 'quit':
-        erver = (serversocket.HOST, 4000)
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.bind((host,PORT))
-        s.settimeout(5)
-        s.sendto(ata.encode('utf-8'),erver)
-        print(s.recv(1024))
-        try:
-            s.sendto(ata.encode('utf-8'), erver)
-        except socket.timeout:
-            print("Error, timeout")
-            s.close()
-
-sender()
+#Variable Declarations
+HEADER = 100
+PORT = 5050
+inputthing = input(str('Enter the other persons IP here:'))
+SERVER = inputthing
+ADDR = (SERVER,PORT)
+clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#Function Declarations
+#Main Area
+clientsocket.connect(ADDR)
+print('Attempting connection to Host: '+ SERVER + ' Port: 5050')

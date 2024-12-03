@@ -1,29 +1,41 @@
-from ssl import SSLContext
-
-import certifi
+#Import Statements
+#Credit: TechWithTim(Code Adjusted Heavily)
+import sys
+import threading
 import socket
-import ssl
-import time
+#Variable Declarations
+HEADER = 100
+PORT = 5050
+SERVER = socket.gethostbyname(socket.gethostname())
+ADDR = (SERVER,PORT)
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind(ADDR)
+FORMAT = 'utf-8'
+#Function Declarations
+def socketeer(conn,addr):
+    connected = True
+    while connected:
+        msg_length = conn.recv(HEADER).decode(FORMAT)
+        msg_length = int(msg_length)
+        msg = conn.recv(msg_length).decode(FORMAT)
+        print('New Message Recieved!')
+        print(str(ADDR)+': '+ msg)
+        if socket.timeout:
+            print('Error! Connection Timeout. Closing Socket Now...')
+            conn.close()
+            sys.exit()
 
-data = input('INPUT:')
-hostname = socket.gethostname()
-HOST = socket.gethostbyname(hostname)
-PORT = 4000
-firstTime = True
-def mainloopy ():
-    while data != 'quit':
-        if not firstTime == True:
-            print("Sending: " + data)
-            data = data.encode('utf-8')
-            try:
-                s.sendto(data.encode('utf-8'), addr)
-            except socket.timeout:
-                print("Error, timeout")
-                s.close()
-        elif not firstTime :
-            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            s.bind((HOST, PORT))
-            s.settimeout(5)
-            data, addr = s.recvfrom(1024)
-            data = data.decode('utf-8')
-            print("Message from: " + str(addr))
+def main():
+    server.listen()
+    while True:
+        conn,addr = server.accept()
+        handler = input(int('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
+        if handler == 1:
+            threader = threading.Thread(target = socketeer, args =(conn, addr))
+            threader.start()
+        elif handler == 2:
+            conn.close()
+            sys.exit()
+#Main Area
+print('Setup Complete! Listening for connections now! Hostname: '+SERVER+" Port: 5050")
+main()
