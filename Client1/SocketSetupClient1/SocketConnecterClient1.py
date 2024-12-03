@@ -2,16 +2,19 @@
 #Credit: TechWithTim(Adjusted Heavily)
 import threading
 import socket
+import sys
 #Variable Declarations
 HEADER = 100
 PORT = 5050
 FORMAT = 'utf-8'
+FirstUse = True
 inputthing = input(str('Enter the other persons IP here:'))
 SERVER = inputthing
 ADDR = (SERVER,PORT)
 clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #Function Declarations
 def sender():
+    global msg
     while msg != 'New Mode':
         msg = input(str('Enter your message here: '))
         message = msg.encode(FORMAT)
@@ -23,7 +26,38 @@ def sender():
         clientsocket.send(msg)
     print('Changing modes now!')
     main()
+def socketeer(conn,addr):
+    connected = True
+    while connected:
+        msg_length = conn.recv(HEADER).decode(FORMAT)
+        if msg_length:
+            msg_length = int(msg_length)
+            msg = conn.recv(msg_length).decode(FORMAT)
+            print('New Message Recieved!')
+            print(str(ADDR)+': '+ msg)
+            if socket.timeout:
+                print('Error! Connection Timeout. Closing Socket Now...')
+                conn.close()
+                sys.exit()
+def listen():
+    print('Setup Complete! Listening for connections now! Hostname: ' + SERVER + " Port: 5050")
+    clientsocket.listen()
+    while True:
+        conn,addr = clientsocket.accept()
+        handler = input(int('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
+        if handler == 1:
+            threader = threading.Thread(target = socketeer, args =(conn, addr))
+            threader.start()
+        elif handler == 2:
+            conn.close()
+            sys.exit()
 def main():
+    global FirstUse
+    while FirstUse == True:
+        clientsocket.connect(ADDR)
+        print('Attempting connection to Host: ' + SERVER + ' Port: 5050')
+        FirstUse = False
+        main()
     while True:
         oginput = input(int('Which Mode Are You Using?(One for listening, Two for receiving)'))
         if oginput == 1:
@@ -33,7 +67,4 @@ def main():
             sender()
 
 #Main Area
-clientsocket.connect(ADDR)
-print('Attempting connection to Host: '+ SERVER + ' Port: 5050')
-msg = input(str('Enter your message here: '))
-sender(msg)
+main()
