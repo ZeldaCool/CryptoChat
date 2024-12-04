@@ -5,7 +5,7 @@ import socket
 import sys
 #Variable Declarations
 HEADER = 100
-PORT = 5050
+PORT = 8080
 FORMAT = 'utf-8'
 FirstUse = True
 inputthing = input(str('Enter the other persons IP here:'))
@@ -23,7 +23,7 @@ def sender():
         send_length += b' '*(HEADER - len(send_length))
         print('Message sending now!')
         clientsocket.send(send_length)
-        clientsocket.send(msg)
+        clientsocket.send(message)
     print('Changing modes now!')
     main()
 def socketeer(conn,addr):

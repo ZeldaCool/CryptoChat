@@ -5,7 +5,7 @@ import threading
 import socket
 #Variable Declarations
 HEADER = 100
-PORT = 5050
+PORT = 8080
 SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER,PORT)
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -55,7 +55,7 @@ def sender():
         send_length += b' '*(HEADER - len(send_length))
         print('Message sending now!')
         server.send(send_length)
-        server.send(msg)
+        server.send(message)
     print('Changing modes now!')
     main()
     SERVER = socket.gethostbyname(socket.gethostname())
