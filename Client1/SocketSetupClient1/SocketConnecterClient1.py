@@ -44,7 +44,7 @@ def listen():
     clientsocket.listen()
     while True:
         conn,addr = clientsocket.accept()
-        handler = input(int('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
+        handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
         if handler == 1:
             threader = threading.Thread(target = socketeer, args =(conn, addr))
             threader.start()
@@ -59,7 +59,7 @@ def main():
         FirstUse = False
         main()
     while True:
-        oginput = input(int('Which Mode Are You Using?(One for listening, Two for receiving)'))
+        oginput = int(input('Which Mode Are You Using?(One for listening, Two for receiving)'))
         if oginput == 1:
             print('Running Listening Mode Now.')
         elif oginput == 2:
