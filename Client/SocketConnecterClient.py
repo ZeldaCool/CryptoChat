@@ -12,10 +12,10 @@ inputthing = input(str('Enter the other persons IP here:'))
 SERVER = inputthing
 ADDR = (SERVER,PORT)
 clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+msg = ''
 #Function Declarations
 def sender():
     msg = input(str('Enter your message here: '))
-    global msg
     while msg != 'New Mode':
         message = msg.encode(FORMAT)
         msg_length = len(message)
@@ -59,7 +59,7 @@ def main():
         FirstUse = False
         main()
     while True:
-        oginput = int(input('Which Mode Are You Using?(One for listening, Two for receiving)'))
+        oginput = int(input('Which Mode Are You Using?(One for listening, Two for sending)'))
         if oginput == 1:
             print('Running Listening Mode Now.')
         elif oginput == 2:

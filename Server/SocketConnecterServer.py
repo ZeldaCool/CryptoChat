@@ -12,6 +12,7 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
 FORMAT = 'utf-8'
 FirstUse = True
+inputthing = ''
 #Function Declarations
 def socketeer(conn,addr):
     connected = True
@@ -41,7 +42,6 @@ def listen():
             sys.exit()
 def sender():
     inputthing = input(str('Enter the other persons IP here:'))
-    global inputthing
     while inputthing != 'New Mode':
         SERVER = inputthing
         PORT = 5050
@@ -66,7 +66,7 @@ def main():
         listen()
         FirstUse = False
     while True:
-        oginput = int(input('Which Mode Are You Using?(One for listening, Two for receiving)'))
+        oginput = int(input('Which Mode Are You Using?(One for listening, Two for sending)'))
         if oginput == 1:
             print('Running Listening Mode Now.')
         elif oginput == 2:
