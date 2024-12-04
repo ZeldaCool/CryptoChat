@@ -41,6 +41,12 @@ def listen():
             sys.exit()
 def sender():
     while msg != 'New Mode':
+        inputthing = input(str('Enter the other persons IP here:'))
+        SERVER = inputthing
+        PORT = 5050
+        ADDR = (SERVER,PORT)
+        server.connect(ADDR)
+        print('Attempting connection to Host')
         msg = input(str('Enter your message here: '))
         message = msg.encode(FORMAT)
         msg_length = len(message)
@@ -51,6 +57,8 @@ def sender():
         server.send(msg)
     print('Changing modes now!')
     main()
+    SERVER = socket.gethostbyname(socket.gethostname())
+    ADDR = (SERVER,PORT)
 def main():
     global FirstUse
     while FirstUse == True:
