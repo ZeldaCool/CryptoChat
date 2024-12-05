@@ -5,7 +5,7 @@ import threading
 import socket
 #Variable Declarations
 HEADER = 100
-PORT = 8080
+PORT = 7070
 SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER,PORT)
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -25,7 +25,8 @@ def socketeer(conn,addr):
             print(str(addr)+': '+ msg)
             if socket.timeout:
                 print('Error! Connection Timeout. Closing Socket Now...')
-                conn.close()
+                server.shutdown(socket.SHUT_RDWR)
+                server.close()
                 sys.exit()
 
 def listen():
@@ -38,7 +39,8 @@ def listen():
             threader = threading.Thread(target = socketeer, args =(conn, addr))
             threader.start()
         elif handler == 2:
-            conn.close()
+            server.shutdown(socket.SHUT_RDWR)
+            server.close()
             sys.exit()
 def sender():
     inputthing = input(str('Enter the other persons IP here:'))

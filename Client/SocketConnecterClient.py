@@ -5,7 +5,7 @@ import socket
 import sys
 #Variable Declarations
 HEADER = 100
-PORT = 8080
+PORT = 7070
 FORMAT = 'utf-8'
 FirstUse = True
 inputthing = input(str('Enter the other persons IP here:'))
@@ -37,7 +37,8 @@ def socketeer(conn,addr):
             print(str(ADDR)+': '+ msg)
             if socket.timeout:
                 print('Error! Connection Timeout. Closing Socket Now...')
-                conn.close()
+                clientsocket.shutdown(socket.SHUT_RDWR)
+                clientsocket.close()
                 sys.exit()
 def listen():
     print('Setup Complete! Listening for connections now! Hostname: ' + SERVER + " Port: 5050")
