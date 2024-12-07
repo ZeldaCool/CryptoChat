@@ -35,6 +35,7 @@ def socketeer(conn,addr):
             msg = conn.recv(msg_length).decode(FORMAT)
             print('New Message Recieved!')
             print(str(ADDR)+': '+ msg)
+            main()
             if socket.timeout:
                 print('Error! Connection Timeout. Closing Socket Now...')
                 clientsocket.shutdown(socket.SHUT_RDWR)
