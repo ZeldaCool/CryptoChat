@@ -48,7 +48,7 @@ def sender():
         SERVER = inputthing
         PORT = 5050
         ADDR = (SERVER,PORT)
-        server.connect(ADDR)
+        server.connect((ADDR))
         print('Attempting connection to Host')
         msg = input(str('Enter your message here: '))
         message = msg.encode(FORMAT)

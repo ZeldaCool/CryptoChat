@@ -8,9 +8,9 @@ HEADER = 100
 PORT = 7070
 FORMAT = 'utf-8'
 FirstUse = True
-inputthing = input(str('Enter the other persons IP here:'))
-SERVER = inputthing
+SERVER = ''
 ADDR = (SERVER,PORT)
+inputthing = input(str('Enter the other persons IP here:'))
 clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 msg = ''
 #Function Declarations
@@ -41,7 +41,7 @@ def socketeer(conn,addr):
                 clientsocket.close()
                 sys.exit()
 def listen():
-    print('Setup Complete! Listening for connections now! Hostname: ' + SERVER + " Port: 5050")
+    print('Setup Complete! Listen ing for connections now! Hostname: ' + SERVER + " Port: 5050")
     clientsocket.listen()
     while True:
         conn,addr = clientsocket.accept()
@@ -55,7 +55,7 @@ def listen():
 def main():
     global FirstUse
     while FirstUse == True:
-        clientsocket.connect(ADDR)
+        clientsocket.connect((ADDR))
         print('Attempting connection to Host: ' + SERVER + ' Port: 5050')
         FirstUse = False
         main()
