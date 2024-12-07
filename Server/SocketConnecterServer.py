@@ -9,7 +9,7 @@ PORT = 7070
 SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER,PORT)
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serversocket.bind(ADDR)
 FORMAT = 'utf-8'
 FirstUse = True
