@@ -47,10 +47,10 @@ def listen():
 def sender():
     inputthing = input(str('Enter the other persons IP here:'))
     while inputthing != 'New Mode':
-        SERVER = inputthing
-        PORT = 7070
-        ADDR = (SERVER,PORT)
-        server.connect((SERVER,7070))
+        serv = inputthing
+        port = 7070
+        address = (serv,port)
+        server.connect((address))
         print('Attempting connection to Host')
         msg = input(str('Enter your message here: '))
         message = msg.encode(FORMAT)
