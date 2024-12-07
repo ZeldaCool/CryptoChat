@@ -10,7 +10,7 @@ SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER,PORT)
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-server.bind(ADDR)
+serversocket.bind(ADDR)
 FORMAT = 'utf-8'
 FirstUse = True
 inputthing = ''
@@ -35,8 +35,8 @@ def listen():
     print('Setup Complete! Listening for connections now! Hostname: ' + SERVER + " Port: 5050")
     serversocket.listen()
     while True:
-        conn,addr = serversocket.accept()
         handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
+        conn, addr = serversocket.accept()
         if handler == 1:
             threader = threading.Thread(target = socketeer, args =(conn, addr))
             threader.start()
