@@ -47,9 +47,9 @@ def sender():
     inputthing = input(str('Enter the other persons IP here:'))
     while inputthing != 'New Mode':
         SERVER = inputthing
-        PORT = 5050
+        PORT = 7070
         ADDR = (SERVER,PORT)
-        server.connect((ADDR))
+        server.connect((SERVER,7070))
         print('Attempting connection to Host')
         msg = input(str('Enter your message here: '))
         message = msg.encode(FORMAT)

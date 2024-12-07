@@ -12,6 +12,8 @@ SERVER = ''
 ADDR = (SERVER,PORT)
 inputthing = input(str('Enter the other persons IP here:'))
 clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+SERVER = inputthing
+ADDR = (SERVER,PORT)
 msg = ''
 #Function Declarations
 def sender():
@@ -42,7 +44,7 @@ def socketeer(conn,addr):
                 clientsocket.close()
                 sys.exit()
 def listen():
-    print('Setup Complete! Listen ing for connections now! Hostname: ' + SERVER + " Port: 5050")
+    print('Setup Complete! Listening for connections now! Hostname: ' + SERVER + " Port: 5050")
     clientsocket.listen()
     while True:
         conn,addr = clientsocket.accept()
