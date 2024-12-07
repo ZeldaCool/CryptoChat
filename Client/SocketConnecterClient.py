@@ -66,6 +66,7 @@ def main():
         oginput = int(input('Which Mode Are You Using?(One for listening, Two for sending)'))
         if oginput == 1:
             print('Running Listening Mode Now.')
+            listen()
         elif oginput == 2:
             print('Running send mode now.')
             sender()
