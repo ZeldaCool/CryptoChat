@@ -67,8 +67,8 @@ def sender():
 def main():
     global FirstUse
     while FirstUse == True:
-        listen()
         FirstUse = False
+        main()
     while True:
         oginput = int(input('Which Mode Are You Using?(One for listening, Two for sending)'))
         if oginput == 1:
