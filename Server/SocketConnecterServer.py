@@ -8,7 +8,8 @@ HEADER = 100
 PORT = 7070
 SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER,PORT)
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server.bind(ADDR)
 FORMAT = 'utf-8'
 FirstUse = True
@@ -32,16 +33,16 @@ def socketeer(conn,addr):
 
 def listen():
     print('Setup Complete! Listening for connections now! Hostname: ' + SERVER + " Port: 5050")
-    server.listen()
+    serversocket.listen()
     while True:
-        conn,addr = server.accept()
+        conn,addr = serversocket.accept()
         handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
         if handler == 1:
             threader = threading.Thread(target = socketeer, args =(conn, addr))
             threader.start()
         elif handler == 2:
-            server.shutdown(socket.SHUT_RDWR)
-            server.close()
+            serversocket.shutdown(socket.SHUT_RDWR)
+            serversocket.close()
             sys.exit()
 def sender():
     inputthing = input(str('Enter the other persons IP here:'))

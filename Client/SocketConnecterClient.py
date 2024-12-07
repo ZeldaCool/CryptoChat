@@ -11,10 +11,14 @@ FirstUse = True
 SERVER = ''
 ADDR = (SERVER,PORT)
 inputthing = input(str('Enter the other persons IP here:'))
-clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+clientsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 SERVER = inputthing
+ports = 7070
+servers = socket.gethostbyname(socket.gethostname())
+adresss = (servers, ports)
 ADDR = (SERVER,PORT)
 msg = ''
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #Function Declarations
 def sender():
     msg = input(str('Enter your message here: '))
@@ -45,15 +49,16 @@ def socketeer(conn,addr):
                 sys.exit()
 def listen():
     print('Setup Complete! Listening for connections now! Hostname: ' + SERVER + " Port: 5050")
-    clientsocket.listen()
+    client.listen()
     while True:
-        conn,addr = clientsocket.accept()
+        conn,addr = client.accept()
         handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
         if handler == 1:
             threader = threading.Thread(target = socketeer, args =(conn, addr))
             threader.start()
         elif handler == 2:
-            conn.close()
+            client.shutdown(socket.SHUT_RDWR)
+            client.close()
             sys.exit()
 def main():
     global FirstUse
@@ -63,7 +68,7 @@ def main():
         FirstUse = False
         main()
     while True:
-        oginput = int(input('Which Mode Are You Using?(One for listening, Two for sending)'))
+        oginput = int(input('Which Mode Are  You Using?(One for listening, Two for sending)'))
         if oginput == 1:
             print('Running Listening Mode Now.')
             listen()
