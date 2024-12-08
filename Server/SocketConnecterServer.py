@@ -18,6 +18,7 @@ FirstRecieve = True
 FirstSend = True
 #Function Declarations
 def socketeer(conn,addr):
+    global FirstRecieve
     connected = True
     while connected:
         msg_length = conn.recv(HEADER).decode(FORMAT)
@@ -48,6 +49,7 @@ def listen():
             serversocket.close()
             sys.exit()
 def sender():
+    global FirstSend
     inputthing = input(str('Enter the other persons IP here:'))
     while FirstSend:
         serv = inputthing
