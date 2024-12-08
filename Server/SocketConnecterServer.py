@@ -14,16 +14,19 @@ serversocket.bind(ADDR)
 FORMAT = 'utf-8'
 FirstUse = True
 inputthing = ''
+FirstRecieve = True
+FirstSend = True
 #Function Declarations
 def socketeer(conn,addr):
     connected = True
     while connected:
         msg_length = conn.recv(HEADER).decode(FORMAT)
-        if msg_length:
+        if FirstRecieve:
             msg_length = int(msg_length)
             msg = conn.recv(msg_length).decode(FORMAT)
             print('New Message Recieved!')
             print(str(addr)+': '+ msg)
+            FirstRecieve = False
             main()
             if socket.timeout:
                 print('Error! Connection Timeout. Closing Socket Now...')
@@ -46,7 +49,7 @@ def listen():
             sys.exit()
 def sender():
     inputthing = input(str('Enter the other persons IP here:'))
-    while inputthing != 'New Mode':
+    while FirstSend:
         serv = inputthing
         port = 7070
         address = (serv,port)
@@ -57,6 +60,7 @@ def sender():
         msg_length = len(message)
         send_length = str(msg_length).encode(FORMAT)
         send_length += b' '*(HEADER - len(send_length))
+        FirstSend = False
         sendhandler()
     print('Changing modes now!')
     main()
@@ -64,6 +68,7 @@ def sender():
     ADDR = (SERVER,PORT)
 def main():
     global FirstUse
+    global FirstSend
     while FirstUse == True:
         FirstUse = False
         main()
@@ -74,13 +79,16 @@ def main():
             listen()
         elif oginput == 2:
             print('Running send mode now.')
+            FirstSend = True
             sender()
 def sendhandler():
     global send_length
     global message
+    global FirstSend
     print('Message sending now!')
     server.send(send_length)
     server.send(message)
-    sender()
+    FirstSend = False
+    main()
 #Main Area
 main()

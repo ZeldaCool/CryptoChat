@@ -3,6 +3,7 @@
 import threading
 import socket
 import sys
+
 #Variable Declarations
 HEADER = 100
 PORT = 7070
@@ -19,10 +20,12 @@ adresss = (servers, ports)
 ADDR = (SERVER,PORT)
 msg = ''
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+FirstSend = True
+FirstRecieve = True
 #Function Declarations
 def sender():
     msg = input(str('Enter your message here: '))
-    while msg != 'New Mode':
+    while FirstSend:
         message = msg.encode(FORMAT)
         msg_length = len(message)
         send_length = str(msg_length).encode(FORMAT)
@@ -30,24 +33,29 @@ def sender():
         print('Message sending now!')
         clientsocket.send(send_length)
         clientsocket.send(message)
+        FirstSend = False
+        sendhandler()
     print('Changing modes now!')
     main()
 def sendhandler():
     global send_length
     global message
+    global FirstSend
     print('Message sending now!')
     clientsocket.send(send_length)
     clientsocket.send(message)
+    FirstSend = False
     sender()
 def socketeer(conn,addr):
     connected = True
     while connected:
         msg_length = conn.recv(HEADER).decode(FORMAT)
-        if msg_length:
+        if FirstRecieve:
             msg_length = int(msg_length)
             msg = conn.recv(msg_length).decode(FORMAT)
             print('New Message Recieved!')
             print(str(ADDR)+': '+ msg)
+            FirstRecieve = False
             main()
             if socket.timeout:
                 print('Error! Connection Timeout. Closing Socket Now...')
@@ -79,9 +87,11 @@ def main():
         oginput = int(input('Which Mode Are  You Using?(One for listening, Two for sending)'))
         if oginput == 1:
             print('Running Listening Mode Now.')
+            FirstRecieve = True
             listen()
         elif oginput == 2:
             print('Running send mode now.')
+            FirstSend = True
             sender()
 
 #Main Area
