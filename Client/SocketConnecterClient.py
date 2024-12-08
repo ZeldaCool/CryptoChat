@@ -25,6 +25,7 @@ FirstRecieve = True
 #Function Declarations
 def sender():
     global FirstSend
+
     msg = input(str('Enter your message here: '))
     while FirstSend:
         message = msg.encode(FORMAT)
@@ -46,7 +47,7 @@ def sendhandler():
     clientsocket.send(send_length)
     clientsocket.send(message)
     FirstSend = False
-    sender()
+    main()
 def socketeer(conn,addr):
     global FirstRecieve
     connected = True
