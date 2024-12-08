@@ -66,7 +66,7 @@ def socketeer(conn,addr):
                 sys.exit()
 def listen():
     print('Setup Complete! Listening for connections now! Hostname: ' + SERVER + " Port: 5050")
-    client.listen()
+    client.listen(HEADER)
     while True:
         conn,addr = client.accept()
         handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
@@ -86,6 +86,8 @@ def main():
         FirstUse = False
         main()
     while True:
+        global FirstRecieve
+        global FirstSend
         oginput = int(input('Which Mode Are  You Using?(One for listening, Two for sending)'))
         if oginput == 1:
             print('Running Listening Mode Now.')

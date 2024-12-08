@@ -37,7 +37,7 @@ def socketeer(conn,addr):
 
 def listen():
     print('Setup Complete! Listening for connections now! Hostname: ' + SERVER + " Port: 5050")
-    serversocket.listen()
+    serversocket.listen(HEADER)
     conn, addr = serversocket.accept()
     handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
     while True:
