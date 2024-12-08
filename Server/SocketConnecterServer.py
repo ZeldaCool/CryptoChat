@@ -57,9 +57,7 @@ def sender():
         msg_length = len(message)
         send_length = str(msg_length).encode(FORMAT)
         send_length += b' '*(HEADER - len(send_length))
-        print('Message sending now!')
-        server.send(send_length)
-        server.send(message)
+        sendhandler()
     print('Changing modes now!')
     main()
     SERVER = socket.gethostbyname(socket.gethostname())
@@ -77,5 +75,12 @@ def main():
         elif oginput == 2:
             print('Running send mode now.')
             sender()
+def sendhandler():
+    global send_length
+    global message
+    print('Message sending now!')
+    server.send(send_length)
+    server.send(message)
+    sender()
 #Main Area
 main()

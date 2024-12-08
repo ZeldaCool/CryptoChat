@@ -32,6 +32,13 @@ def sender():
         clientsocket.send(message)
     print('Changing modes now!')
     main()
+def sendhandler():
+    global send_length
+    global message
+    print('Message sending now!')
+    clientsocket.send(send_length)
+    clientsocket.send(message)
+    sender()
 def socketeer(conn,addr):
     connected = True
     while connected:
