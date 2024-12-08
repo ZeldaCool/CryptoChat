@@ -54,6 +54,7 @@ def listen():
         conn,addr = client.accept()
         handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
         if handler == 1:
+            print('Ready to recieve messages!')
             threader = threading.Thread(target = socketeer, args =(conn, addr))
             threader.start()
         elif handler == 2:

@@ -35,8 +35,8 @@ def listen():
     print('Setup Complete! Listening for connections now! Hostname: ' + SERVER + " Port: 5050")
     serversocket.listen()
     conn, addr = serversocket.accept()
+    handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
     while True:
-        handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
         if handler == 1:
             threader = threading.Thread(target = socketeer, args =(conn, addr))
             threader.start()
