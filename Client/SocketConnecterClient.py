@@ -11,9 +11,7 @@ FORMAT = 'utf-8'
 FirstUse = True
 SERVER = ''
 ADDR = (SERVER,PORT)
-inputthing = input(str('Enter the other persons IP here:'))
 clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-SERVER = inputthing
 ports = 7070
 servers = socket.gethostbyname(socket.gethostname())
 adresss = (servers, ports)
@@ -26,8 +24,12 @@ FirstRecieve = True
 def sender():
     global FirstSend
     global send_length
+    inputthing = input(str('Enter the other persons IP here:'))
     msg = input(str('Enter your message here: '))
     while FirstSend:
+        SERVER = inputthing
+        ADDR = (SERVER,PORT)
+        clientsocket.bind(ADDR)
         message = msg.encode(FORMAT)
         msg_length = len(message)
         send_length = str(msg_length).encode(FORMAT)
@@ -43,6 +45,7 @@ def sendhandler():
     global send_length
     global message
     global FirstSend
+    global msg
     print('Message sending now!')
     clientsocket.send(send_length)
     clientsocket.send(message)
