@@ -25,14 +25,13 @@ FirstRecieve = True
 #Function Declarations
 def sender():
     global FirstSend
-
+    global send_length
     msg = input(str('Enter your message here: '))
     while FirstSend:
         message = msg.encode(FORMAT)
         msg_length = len(message)
-        send_length = str(msg_length)
+        send_length = str(msg_length).encode(FORMAT)
         send_length += b' '*(HEADER - len(send_length))
-        send_length = send_length.encode(FORMAT)
         print('Message sending now!')
         clientsocket.send(send_length)
         clientsocket.send(message)

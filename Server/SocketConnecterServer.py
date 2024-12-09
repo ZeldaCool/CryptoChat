@@ -50,6 +50,7 @@ def listen():
             sys.exit()
 def sender():
     global FirstSend
+    global send_length
     inputthing = input(str('Enter the other persons IP here:'))
     while FirstSend:
         serv = inputthing
@@ -60,9 +61,8 @@ def sender():
         msg = input(str('Enter your message here: '))
         message = msg.encode(FORMAT)
         msg_length = len(message)
-        send_length = str(msg_length)
+        send_length = str(msg_length).encode(FORMAT)
         send_length += b' '*(HEADER - len(send_length))
-        send_length.encode(FORMAT)
         FirstSend = False
         sendhandler()
     print('Changing modes now!')
