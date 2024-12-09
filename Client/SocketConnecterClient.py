@@ -85,12 +85,6 @@ def listen():
             client.close()
             sys.exit()
 def main():
-    global FirstUse
-    while FirstUse == True:
-        clientsocket.connect((ADDR))
-        print('Attempting connection to Host: ' + SERVER + ' Port: 5050')
-        FirstUse = False
-        main()
     while True:
         global FirstRecieve
         global FirstSend
