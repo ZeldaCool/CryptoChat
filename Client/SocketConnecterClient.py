@@ -28,7 +28,6 @@ def sender():
     while FirstSend:
         SERVER = inputthing
         ADDR = (SERVER,PORT)
-        clientsocket.bind(ADDR)
         srvr = inputthing
         addr = (srvr, PORT)
         clientsocket.connect((addr))
@@ -73,12 +72,11 @@ def socketeer(conn,addr):
 def listen():
     print('Setup Complete! Listening for connections now! Hostname: ' + SERVER + " Port: 5050")
     client.listen(HEADER)
+    conn, addr = client.accept()
+    handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
     while True:
-        conn,addr = client.accept()
-        handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
         if handler == 1:
-            print('Ready to recieve messages!')
-            threader = threading.Thread(target = socketeer, args =(conn, addr))
+            threader = threading.Thread(target=socketeer, args=(conn, addr))
             threader.start()
         elif handler == 2:
             client.shutdown(socket.SHUT_RDWR)
