@@ -55,6 +55,7 @@ def listen():
 def sender():
     global FirstSend
     global send_length
+    global message
     inputthing = input(str('Enter the other persons IP here:'))
     while FirstSend:
         serv = inputthing
