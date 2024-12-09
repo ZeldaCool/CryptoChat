@@ -25,11 +25,13 @@ def sender():
     global FirstSend
     global send_length
     inputthing = input(str('Enter the other persons IP here:'))
-    msg = input(str('Enter your message here: '))
     while FirstSend:
         SERVER = inputthing
         ADDR = (SERVER,PORT)
         clientsocket.bind(ADDR)
+        srvr = inputthing
+        addr = (srvr, PORT)
+        clientsocket.connect((addr))
         message = msg.encode(FORMAT)
         msg_length = len(message)
         send_length = str(msg_length).encode(FORMAT)
