@@ -31,6 +31,7 @@ def sender():
         ADDR = (SERVER,PORT)
         srvr = inputthing
         addr = (srvr, PORT)
+        msg = input(str('Enter Your Message Here:'))
         clientsocket.connect((addr))
         message = msg.encode(FORMAT)
         msg_length = len(message)
