@@ -6,10 +6,14 @@ import socket
 #Variable Declarations
 HEADER = 100
 PORT = 7070
+ports = 5050
+servers = socket.gethostbyname(socket.gethostname())
+adrs = (servers, ports)
 SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER,PORT)
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind(adrs)
 serversocket.bind(ADDR)
 FORMAT = 'utf-8'
 FirstUse = True
@@ -72,9 +76,6 @@ def sender():
 def main():
     global FirstUse
     global FirstSend
-    while FirstUse == True:
-        FirstUse = False
-        main()
     while True:
         oginput = int(input('Which Mode Are You Using?(One for listening, Two for sending)'))
         if oginput == 1:
