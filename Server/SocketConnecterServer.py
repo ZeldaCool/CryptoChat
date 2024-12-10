@@ -61,7 +61,7 @@ def sender():
     inputthing = input(str('Enter the other persons IP here:'))
     while FirstSend & FirstConnect:
         serv = inputthing
-        port = 7070
+        port = 5050
         address = (serv,port)
         server.connect((address))
         print('Attempting connection to Host')
