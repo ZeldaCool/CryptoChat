@@ -20,6 +20,7 @@ FirstUse = True
 inputthing = ''
 FirstRecieve = True
 FirstSend = True
+FirstConnect = True
 #Function Declarations
 def socketeer(conn,addr):
     global FirstRecieve
@@ -56,8 +57,9 @@ def sender():
     global FirstSend
     global send_length
     global message
+    global FirstConnect
     inputthing = input(str('Enter the other persons IP here:'))
-    while FirstSend:
+    while FirstSend & FirstConnect:
         serv = inputthing
         port = 7070
         address = (serv,port)
@@ -69,7 +71,20 @@ def sender():
         send_length = str(msg_length).encode(FORMAT)
         send_length += b' '*(HEADER - len(send_length))
         FirstSend = False
+        FirstConnect = False
         sendhandler()
+    while FirstSend:
+        print('Attempting connection to Host')
+        msg = input(str('Enter your message here: '))
+        message = msg.encode(FORMAT)
+        msg_length = len(message)
+        send_length = str(msg_length).encode(FORMAT)
+        send_length += b' ' * (HEADER - len(send_length))
+        FirstSend = False
+        FirstConnect = False
+        sendhandler()
+
+
     print('Changing modes now!')
     main()
     SERVER = socket.gethostbyname(socket.gethostname())

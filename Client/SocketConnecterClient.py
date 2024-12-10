@@ -20,17 +20,20 @@ msg = ''
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 FirstSend = True
 FirstRecieve = True
+FirstConnect = True
 #Function Declarations
 def sender():
     global FirstSend
     global send_length
     global message
+    global FirstConnect
     inputthing = input(str('Enter the other persons IP here:'))
-    while FirstSend:
+    while FirstSend & FirstConnect:
         SERVER = inputthing
         ADDR = (SERVER,PORT)
         srvr = inputthing
         addr = (srvr, PORT)
+        print('Attempting Connection to Host')
         msg = input(str('Enter Your Message Here:'))
         clientsocket.connect((addr))
         message = msg.encode(FORMAT)
@@ -41,6 +44,19 @@ def sender():
         clientsocket.send(send_length)
         clientsocket.send(message)
         FirstSend = False
+        FirstConnect = False
+        sendhandler()
+    while FirstSend:
+        msg = input(str('Enter Your Message Here:'))
+        message = msg.encode(FORMAT)
+        msg_length = len(message)
+        send_length = str(msg_length).encode(FORMAT)
+        send_length += b' ' * (HEADER - len(send_length))
+        print('Message sending now!')
+        clientsocket.send(send_length)
+        clientsocket.send(message)
+        FirstSend = False
+        FirstConnect = False
         sendhandler()
     print('Changing modes now!')
     main()
