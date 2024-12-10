@@ -18,6 +18,7 @@ adresss = (servers, ports)
 ADDR = (SERVER,PORT)
 msg = ''
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.bind(adresss)
 FirstSend = True
 FirstRecieve = True
 FirstConnect = True
@@ -88,7 +89,7 @@ def socketeer(conn,addr):
                 clientsocket.close()
                 sys.exit()
 def listen():
-    print('Setup Complete! Listening for connections now! Hostname: ' + SERVER + " Port: 5050")
+    print('Setup Complete! Listening for connections now! Hostname: ' + servers + " Port: 5050")
     client.listen(HEADER)
     conn, addr = client.accept()
     handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
