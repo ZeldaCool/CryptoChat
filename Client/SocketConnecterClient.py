@@ -80,7 +80,7 @@ def socketeer(conn,addr):
             msg_length = int(msg_length)
             msg = conn.recv(msg_length).decode(FORMAT)
             print('New Message Recieved!')
-            print(str(ADDR)+': '+ msg)
+            print(str(addr)+': '+ msg)
             FirstRecieve = False
             main()
             if socket.timeout:
