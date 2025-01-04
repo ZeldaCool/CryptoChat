@@ -22,6 +22,7 @@ client.bind(adresss)
 FirstSend = True
 FirstRecieve = True
 FirstConnect = True
+hey = True
 #Function Declarations
 def sender():
     global FirstSend
@@ -77,8 +78,9 @@ def socketeer(conn,addr):
             msg_length = int(msg_length)
             msg = conn.recv(msg_length).decode(FORMAT)
             print('New Message Recieved!')
-            print(str(addr)+': '+str(msg))
+            print(str(addr)+': '+ str(msg))
             FirstRecieve = False
+            connected = False
             main()
             if socket.timeout:
                 print('Error! Connection Timeout. Closing Socket Now...')
@@ -90,7 +92,7 @@ def listen():
     client.listen(HEADER)
     conn, addr = client.accept()
     handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
-    while True:
+    while hey:
         if handler == 1:
             threader = threading.Thread(target=socketeer, args=(conn, addr))
             threader.start()
@@ -102,15 +104,18 @@ def main():
     while True:
         global FirstRecieve
         global FirstSend
+        global connected
+        global hey
         oginput = int(input('Which Mode Are  You Using?(One for listening, Two for sending)'))
         if oginput == 1:
             print('Running Listening Mode Now.')
             FirstRecieve = True
+            connected = True
+            hey = True
             listen()
         elif oginput == 2:
             print('Running send mode now.')
             FirstSend = True
-
             sender()
 
 #Main Area

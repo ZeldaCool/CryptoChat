@@ -17,6 +17,7 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serversocket.bind(ADDR)
 FORMAT = 'utf-8'
 FirstUse = True
+hola = True
 inputthing = ''
 FirstRecieve = True
 FirstSend = True
@@ -34,6 +35,7 @@ def socketeer(conn,addr):
             print('New Message Recieved!')
             print(str(addr)+': '+ str(msg))
             FirstRecieve = False
+            connected = False
             main()
             if socket.timeout:
                 print('Error! Connection Timeout. Closing Socket Now...')
@@ -46,7 +48,7 @@ def listen():
     serversocket.listen(HEADER)
     conn, addr = serversocket.accept()
     handler = int(input('Connection Received! Press One To Accept Connection, Or Press Two to Deny.'))
-    while True:
+    while hola:
         if handler == 1:
             threader = threading.Thread(target = socketeer, args =(conn, addr))
             threader.start()
@@ -60,8 +62,8 @@ def sender():
     global message
     global FirstConnect
     global HEADER
-    inputthing = input(str('Enter the other persons IP here:'))
     while FirstSend & FirstConnect:
+        inputthing = input(str('Enter the other persons IP here:'))
         serv = inputthing
         port = 5050
         address = (serv,port)
@@ -75,16 +77,15 @@ def sender():
         FirstSend = False
         FirstConnect = False
         sendhandler()
-    while FirstSend:
-        print('Attempting connection to Host')
-        msg = input(str('Enter your message here: '))
-        message = msg.encode(FORMAT)
-        msg_length = len(message)
-        send_length = str(msg_length).encode(FORMAT)
-        send_length += b' ' * (HEADER - len(send_length))
-        FirstSend = False
-        FirstConnect = False
-        sendhandler()
+    msg = input(str('Enter your message here: '))
+    message = msg.encode(FORMAT)
+    msg_length = len(message)
+    send_length = str(msg_length).encode(FORMAT)
+    send_length += b' ' * (HEADER - len(send_length))
+    FirstSend = False
+    FirstConnect = False
+    sendhandler()
+
 
 
     print('Changing modes now!')
@@ -95,15 +96,18 @@ def main():
     global FirstUse
     global FirstSend
     global FirstRecieve
+    global connected
+    global hola
     while True:
         oginput = int(input('Which Mode Are You Using?(One for listening, Two for sending)'))
         if oginput == 1:
             print('Running Listening Mode Now.')
             FirstRecieve = True
+            connected = True
+            hola = True
             listen()
         elif oginput == 2:
             print('Running send mode now.')
-            FirstSend = True
             sender()
 def sendhandler():
     global send_length
