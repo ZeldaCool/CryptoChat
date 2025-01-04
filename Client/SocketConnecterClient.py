@@ -75,7 +75,7 @@ def socketeer(conn,addr):
         msg_length = conn.recv(HEADER).decode(FORMAT)
         if FirstRecieve:
             msg_length = int(msg_length)
-            msg = conn.recv(msg_length)
+            msg = conn.recv(msg_length).decode(FORMAT)
             print('New Message Recieved!')
             print(str(addr)+': '+str(msg))
             FirstRecieve = False
