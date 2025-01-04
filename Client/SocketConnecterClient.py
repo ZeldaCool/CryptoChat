@@ -41,9 +41,6 @@ def sender():
         msg_length = len(message)
         send_length = str(msg_length).encode(FORMAT)
         send_length += b' '*(HEADER - len(send_length))
-        print('Message sending now!')
-        clientsocket.send(send_length)
-        clientsocket.send(message)
         FirstSend = False
         FirstConnect = False
         sendhandler()
@@ -78,9 +75,9 @@ def socketeer(conn,addr):
         msg_length = conn.recv(HEADER).decode(FORMAT)
         if FirstRecieve:
             msg_length = int(msg_length)
-            msg = conn.recv(msg_length).decode(FORMAT)
+            msg = conn.recv(msg_length)
             print('New Message Recieved!')
-            print(str(addr)+': '+ msg)
+            print(str(addr)+': '+str(msg))
             FirstRecieve = False
             main()
             if socket.timeout:
@@ -113,6 +110,7 @@ def main():
         elif oginput == 2:
             print('Running send mode now.')
             FirstSend = True
+
             sender()
 
 #Main Area

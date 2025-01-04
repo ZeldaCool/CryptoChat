@@ -21,6 +21,7 @@ inputthing = ''
 FirstRecieve = True
 FirstSend = True
 FirstConnect = True
+msg = ''
 #Function Declarations
 def socketeer(conn,addr):
     global FirstRecieve
@@ -58,14 +59,15 @@ def sender():
     global send_length
     global message
     global FirstConnect
+    global HEADER
     inputthing = input(str('Enter the other persons IP here:'))
     while FirstSend & FirstConnect:
         serv = inputthing
         port = 5050
         address = (serv,port)
-        server.connect((address))
         print('Attempting connection to Host')
         msg = input(str('Enter your message here: '))
+        server.connect((address))
         message = msg.encode(FORMAT)
         msg_length = len(message)
         send_length = str(msg_length).encode(FORMAT)
@@ -105,9 +107,12 @@ def sendhandler():
     global send_length
     global message
     global FirstSend
+    global msg
     print('Message sending now!')
     server.send(send_length)
     server.send(message)
+    msg = ''
+    send_length = ''
     FirstSend = False
     main()
 #Main Area
